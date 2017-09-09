@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FizzBuzz", "FizzBuzz\FizzBuzz.csproj", "{6506A137-C4B0-4230-A6BF-401740F9B54A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FizzBuzzTests", "FizzBuzzTests\FizzBuzzTests.csproj", "{38923800-0E08-42EE-927E-4A94EFD5B44E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{6506A137-C4B0-4230-A6BF-401740F9B54A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6506A137-C4B0-4230-A6BF-401740F9B54A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6506A137-C4B0-4230-A6BF-401740F9B54A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38923800-0E08-42EE-927E-4A94EFD5B44E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38923800-0E08-42EE-927E-4A94EFD5B44E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38923800-0E08-42EE-927E-4A94EFD5B44E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38923800-0E08-42EE-927E-4A94EFD5B44E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
