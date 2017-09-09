@@ -1,6 +1,6 @@
 namespace CM
 {
-    public class FibonacciFizzBuzz : FizzBuzz
+    public class FibonacciFizzBuzz : FizzBuzzWhile
     {
         private long _last;
 

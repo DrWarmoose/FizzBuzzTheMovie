@@ -119,7 +119,7 @@ namespace FizzBuzzTests
         {
             var settings = FizzBuzzSettings.Default;
             settings.End = 200;
-            var actual = new FizzBuzz(settings,(lastIndex,lastValue) => lastIndex <= 100).ToArray();
+            var actual = new FizzBuzzWhile(settings,(lastIndex,lastValue) => lastIndex <= 100).ToArray();
 
             TestFizzBuzzSequence(actual);
         }
@@ -138,7 +138,7 @@ namespace FizzBuzzTests
 
             // note, doubling 'End' to test condition
             var settings = new FizzBuzzSettings { Start = 1, End = 3 * 5 * 7 * 11 * 2, Pairs = kvp };
-            var actual = new FizzBuzz(settings, (lastIndex, lastValue) => lastValue != "fizzbuzzfoobar").ToArray();
+            var actual = new FizzBuzzWhile(settings, (lastIndex, lastValue) => lastValue != "fizzbuzzfoobar").ToArray();
 
             TestFizzBuzzFooBarSequence(actual, settings);
         }

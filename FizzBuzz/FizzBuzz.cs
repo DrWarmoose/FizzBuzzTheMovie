@@ -9,20 +9,10 @@ namespace CM
     {
         public const string UsageWarning = "usage: fizzBuzzSettings.Start and fizzBuzzSettings.End must be provided.";
         private IFizzBuzzSettings _settings;
-        private readonly ContinueWhile _condition = null;
 
         public FizzBuzz(IFizzBuzzSettings settings = null)
         {
             Settings = settings;
-        }
-        public FizzBuzz(ContinueWhile condition)
-        {
-            _condition = condition;
-        }
-        public FizzBuzz(IFizzBuzzSettings settings, ContinueWhile condition)
-        {
-            Settings = settings;
-            _condition = condition;
         }
 
         public long Start => _settings?.Start ?? 0L;
@@ -43,9 +33,9 @@ namespace CM
             }
         }
 
-        public IEnumerator<string> GetEnumerator()
+        public virtual IEnumerator<string> GetEnumerator()
         {
-            return (_condition == null ? Execute() : ExecuteWhile(_condition)).GetEnumerator();
+            return Execute().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -59,12 +49,6 @@ namespace CM
             return Shortcut() ?? IterativeExecute();
         }
 
-        public IEnumerable<string> ExecuteWhile(ContinueWhile condition, IFizzBuzzSettings fizzBuzzSettings = null  )
-        {
-            Settings = fizzBuzzSettings ;
-            return Shortcut(condition) ?? ConditionalExecute(condition);
-        }
-
         public virtual IFizzBuzzSettings SettingsChanged(IFizzBuzzSettings settings)
         {
             return settings;
@@ -75,7 +59,7 @@ namespace CM
         /// rather than invoking the bigger methods
         /// </summary>
         /// <returns>IEnumerable&lt;System.String&gt;.</returns>
-        private IEnumerable<string> Shortcut( ContinueWhile condition = null)
+        protected IEnumerable<string> Shortcut()
         {
             if (Settings == null) // TODO:  could remove this if Settings remains coded to default to FBS.Default
             {
@@ -87,8 +71,7 @@ namespace CM
             }
             if (Settings.Pairs == null || Settings.Pairs.Length == 0)
             {
-                return (condition != null) ? EmptyConditionalExecute(condition) :
-                        Range().Select(s => s.ToString());
+                return Range().Select(s => s.ToString());
             }
             return null;
         }
@@ -103,38 +86,6 @@ namespace CM
             return from index in Range()
                 let pairs = Settings.Pairs.Where(x => (index % x.Key) == 0).Select(kvp => kvp.Value)
                 select pairs.Any() ? $"{string.Join("", pairs)}" : $"{index}";
-        }
-
-        /// <summary>
-        /// Instead of running through a fore-known range, this method passes the last index
-        /// and the last value generated so that it will continue to iterate until some formula
-        /// that may use the last value and/or the last fizz/buzz string generated.
-        /// </summary>
-        /// <param name="condition">The condition delegate that accepts last index and last value and
-        /// returns true if the function should continue, false if it should end now.</param>
-        /// <returns>IEnumerable&lt;System.String&gt;.</returns>
-        private IEnumerable<string> ConditionalExecute(ContinueWhile condition)
-        {
-            var index = Settings.Start;
-            var lastValue = string.Empty;
-            while (condition(index, lastValue))
-            {
-                var pairs = Settings.Pairs.Where(x => (index % x.Key) == 0).Select(kvp => kvp.Value).ToArray();
-                lastValue = pairs.Any() ? $"{string.Join("", pairs)}" : $"{index}";
-                index += Increment(index);
-                yield return lastValue;
-            }
-        }
-
-        /// <summary>
-        /// Exercises the condition method.
-        /// </summary>
-        /// <param name="condition">The condition.</param>
-        /// <returns>IEnumerable&lt;System.String&gt;.</returns>
-        private IEnumerable<string> EmptyConditionalExecute(ContinueWhile condition)
-        {
-            for (var index = Start; condition(index, index.ToString());)
-                yield return index.ToString();
         }
 
         /// <summary>
